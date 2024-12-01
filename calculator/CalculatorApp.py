@@ -1,7 +1,7 @@
 import tkinter as tkinter
 import tkinter.font as tkFont
-from CalculatorLogic import CalculatorLogic
-from DatabaseManager import DatabaseManager
+from calculator.CalculatorLogic import CalculatorLogic
+from calculator.DatabaseManager import DatabaseManager
 
 
 class CalculatorApp:
@@ -48,7 +48,7 @@ class CalculatorApp:
         result = self.calculator_logic.calculate_result()
         self.db_manager.save_calculation(first_value, operator, second_value, result)
         self.show_history()
-        self.result_display.config(text=result)
+        self.result_display.config(text=str(result))
 
     def show_history(self):
         """Show the calculation history from the database."""
@@ -60,9 +60,9 @@ class CalculatorApp:
             self.history_listbox.insert(tkinter.END, f"{calc[0]} {calc[1]} {calc[2]} = {calc[3]}")
 
 
-    def __init__(self, app):
+    def __init__(self, app, db_name):
         """Initializes the calculator app."""
-        self.db_manager = DatabaseManager()
+        self.db_manager = DatabaseManager(db_name)
         self.calculator_logic = CalculatorLogic()
         self.app = app
         self.app.title("Calculator")
@@ -83,62 +83,69 @@ class CalculatorApp:
         self.second_value_entry = tkinter.Entry(self.app, font=self.font,  width=8, justify="center", bd=8, relief="ridge", bg="black", fg="white", insertbackground="white")
         self.second_value_entry.grid(row=1, column=3, columnspan=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="1",  width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("1"))
-        bouton.grid(row=2, column=0, padx=2, pady=2)
+        self.bouton_one = tkinter.Button(self.app, text="1",  width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("1"))
+        self.bouton_one.grid(row=2, column=0, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="2", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("2"))
-        bouton.grid(row=2, column=1, padx=2, pady=2)
+        self.bouton_two = tkinter.Button(self.app, text="2", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("2"))
+        self.bouton_two.grid(row=2, column=1, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="3", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("3"))
-        bouton.grid(row=2, column=2, padx=2, pady=2)
+        self.bouton_one = tkinter.Button(self.app, text="1",  width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("1"))
+        self.bouton_one.grid(row=2, column=0, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="<--", width=15, height=2, font=("Arial", 14, "bold"), bg="red", fg="white" ,command=self.remove_last_char)
-        bouton.grid(row=2, column=3, columnspan=2, padx=2, pady=2)
+        self.bouton_two = tkinter.Button(self.app, text="2", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("2"))
+        self.bouton_two.grid(row=2, column=1, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="4", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("4"))
-        bouton.grid(row=3, column=0, padx=2, pady=2)
+        self.bouton_three = tkinter.Button(self.app, text="3", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("3"))
+        self.bouton_three.grid(row=2, column=2, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="5", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("5"))
-        bouton.grid(row=3, column=1, padx=2, pady=2)
+        self.bouton_backspace = tkinter.Button(self.app, text="<--", width=15, height=2, font=("Arial", 14, "bold"), bg="red", fg="white" ,command=self.remove_last_char)
+        self.bouton_backspace.grid(row=2, column=3, columnspan=2, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="6", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("6"))
-        bouton.grid(row=3, column=2, padx=2, pady=2)
+        self.bouton_four = tkinter.Button(self.app, text="4", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("4"))
+        self.bouton_four.grid(row=3, column=0, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="+", width=5, height=2, font=("Arial", 14, "bold"), bg="orange", fg="white" ,command=lambda: self.add_to_field("+"))
-        bouton.grid(row=3, column=3, padx=2, pady=2)
+        self.bouton_five = tkinter.Button(self.app, text="5", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("5"))
+        self.bouton_five.grid(row=3, column=1, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="-", width=5, height=2, font=("Arial", 14, "bold"), bg="orange", fg="white" ,command=lambda: self.add_to_field("-"))
-        bouton.grid(row=3, column=4, padx=2, pady=2)
+        self.bouton_six = tkinter.Button(self.app, text="6", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("6"))
+        self.bouton_six.grid(row=3, column=2, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="7", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("7"))
-        bouton.grid(row=4, column=0, padx=2, pady=2)
+        self.bouton_plus = tkinter.Button(self.app, text="+", width=5, height=2, font=("Arial", 14, "bold"), bg="orange", fg="white" ,command=lambda: self.add_to_field("+"))
+        self.bouton_plus.grid(row=3, column=3, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="8", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("8"))
-        bouton.grid(row=4, column=1, padx=2, pady=2)
+        self.bouton_minus = tkinter.Button(self.app, text="-", width=5, height=2, font=("Arial", 14, "bold"), bg="orange", fg="white" ,command=lambda: self.add_to_field("-"))
+        self.bouton_minus.grid(row=3, column=4, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="9", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("9"))
-        bouton.grid(row=4, column=2, padx=2, pady=2)
+        self.bouton_seven = tkinter.Button(self.app, text="7", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("7"))
+        self.bouton_seven.grid(row=4, column=0, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="*", width=5, height=2, font=("Arial", 14, "bold"), bg="orange", fg="white" ,command=lambda: self.add_to_field("*"))
-        bouton.grid(row=4, column=3, padx=2, pady=2)
+        self.bouton_eight = tkinter.Button(self.app, text="8", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("8"))
+        self.bouton_eight.grid(row=4, column=1, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="/", width=5, height=2, font=("Arial", 14, "bold"), bg="orange", fg="white" ,command=lambda: self.add_to_field("/"))
-        bouton.grid(row=4, column=4, padx=2, pady=2)
+        self.bouton_nine = tkinter.Button(self.app, text="9", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("9"))
+        self.bouton_nine.grid(row=4, column=2, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text=".", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("."))
-        bouton.grid(row=5, column=0, padx=2, pady=2)
+        self.bouton_multiply = tkinter.Button(self.app, text="*", width=5, height=2, font=("Arial", 14, "bold"), bg="orange", fg="white" ,command=lambda: self.add_to_field("*"))
+        self.bouton_multiply.grid(row=4, column=3, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="0", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("0"))
-        bouton.grid(row=5, column=1, padx=2, pady=2)
+        self.bouton_divide = tkinter.Button(self.app, text="/", width=5, height=2, font=("Arial", 14, "bold"), bg="orange", fg="white" ,command=lambda: self.add_to_field("/"))
+        self.bouton_divide.grid(row=4, column=4, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="00", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("00"))
-        bouton.grid(row=5, column=2, padx=2, pady=2)
+        self.bouton_dot = tkinter.Button(self.app, text=".", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("."))
+        self.bouton_dot.grid(row=5, column=0, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="C", width=5, height=2, font=("Arial", 14, "bold"), bg="red", fg="white" ,command=self.reset_all_fields)
-        bouton.grid(row=5, column=3, padx=2, pady=2)
+        self.bouton_zero = tkinter.Button(self.app, text="0", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("0"))
+        self.bouton_zero.grid(row=5, column=1, padx=2, pady=2)
 
-        bouton = tkinter.Button(self.app, text="=", width=5, height=2, font=("Arial", 14, "bold"), bg="green", fg="white" ,command=self.get_result)
-        bouton.grid(row=5, column=4, padx=2, pady=2)
+        self.bouton_double_zero = tkinter.Button(self.app, text="00", width=5, height=2, font=("Arial", 14, "bold"), bg="grey", fg="white" ,command=lambda: self.add_to_field("00"))
+        self.bouton_double_zero.grid(row=5, column=2, padx=2, pady=2)
+
+        self.bouton_clear = tkinter.Button(self.app, text="C", width=5, height=2, font=("Arial", 14, "bold"), bg="red", fg="white" ,command=self.reset_all_fields)
+        self.bouton_clear.grid(row=5, column=3, padx=2, pady=2)
+
+        self.bouton_equals = tkinter.Button(self.app, text="=", width=5, height=2, font=("Arial", 14, "bold"), bg="green", fg="white" ,command=self.get_result)
+        self.bouton_equals.grid(row=5, column=4, padx=2, pady=2)
+
 
         self.history_listbox = tkinter.Listbox(self.app, font=("Arial", 14, "bold"), width=30, height=7, fg="black")
         self.history_listbox.grid(row=7, column=0, columnspan=5, pady=2)
