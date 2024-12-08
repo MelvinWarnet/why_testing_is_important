@@ -6,7 +6,7 @@ L'objectif de ce repository est de démontrer l'importance des tests dans le dé
 
 ## How do I get set up ?
 
-Ce mini-projet est réalisé en Python 3.10.12 mais il est possible de l'exécuter avec une version antérieure de Python 3. Pour lancer le projet, il suffit de cloner le repository et d'exécuter le fichier `main.py` avec la commande `python3 main.py`. Pour une expérience améliorée, vous pouver ajouter la police de caractère `Digital-7.ttf` à votre système. Vous devrez également avoir installer `sqlite3` pour pouvoir utiliser la base de données et `pytest` pour lancer les tests.
+Ce mini-projet est réalisé en Python 3.10.12 mais il est possible de l'exécuter avec une version antérieure de Python 3. Pour lancer le projet, il suffit de cloner le repository et d'exécuter le fichier `main.py` avec la commande `python3 main.py`. Pour une expérience améliorée, vous pouver ajouter la police de caractère `Digital-7.ttf` à votre système. Vous devrez également avoir installer `sqlite3` pour pouvoir utiliser la base de données et `pytest` et `pytest-cov` pour lancer les tests.
 
 ## Etape 0 : Une première version
 
@@ -221,13 +221,25 @@ On voit que les tests passent tous, ils ont permis de révéler des erreurs dans
 **Définition :** Ces tests se concentrent sur les performances de votre logiciel. Ils s'assurent que votre logiciel fonctionne correctement en terme de temps d'exécution, de consommation de ressources, etc.
 
 Rendez-vous sur la branche `step-4-performance-test` pour voir le code de la cinquième version du projet `git branch step-4-performance-test`. Cette version contient des tests de performance portant sur les performances de la calculatrice. Ces tests permettent de vérifier que la calculatrice execute les opérations de base dans un temps cible. _Notez que on fonction de votre ordinateur, les temps cibles peuvent être à adapter._
+Executez la commande `python3 -m pytest --cov=calculator --cov-report=html --cov-report=term` pour lancer les tests.
 
 On obtient le résultat suivant :
 ```
+---------- coverage: platform linux, python 3.10.12-final-0 ----------
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+calculator/CalculatorApp.py       105      2    98%
+calculator/CalculatorLogic.py      41      1    98%
+calculator/DatabaseManager.py      28      0   100%
+---------------------------------------------------
+TOTAL                             174      3    98%
+Coverage HTML written to dir htmlcov
 
-
-- Erreur reveler : - La multiplication fait des trucs de zinzin en temre de ressource mais sort le bon resultat
-
+===== short test summary info =====
+FAILED tests/PerformanceTests/test_performance.py::test_multiplication_performance_time - AssertionError: Time taken too long: 2.998039484024048 seconds
+===== 1 failed, 38 passed in 10.05s =====
+```
+On voit que un test a échoué. Ce test a permis de révéler une erreur dans le code de la fonction `multiply` de la classe `CalculatorLogic`. En effet, en regardant le code source, on voit que la fonction `multiply` contient une boucle inutile qui ralentit l'exécution
 ```python
 def multiply(self, a, b):
     """Do the multiplication."""
@@ -243,9 +255,38 @@ def multiply(self, a, b):
     return a * b
 ```
 
+On peut maintenant relancer les tests pour vérifier que les erreurs ont été corrigées.
+```
+---------- coverage: platform linux, python 3.10.12-final-0 ----------
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+calculator/CalculatorApp.py       105      2    98%
+calculator/CalculatorLogic.py      39      1    97%
+calculator/DatabaseManager.py      28      0   100%
+---------------------------------------------------
+TOTAL                             172      3    98%
+Coverage HTML written to dir htmlcov
+
+
+==== 39 passed in 7.39s =====
+```
+On voit que les tests passent tous, ils ont permis de révéler des erreurs dans le code et de les corriger.
+
 ## Etape 5 : Ajout d'une couche de tests exploratoires
 
-- Erreur reveler : on peut rentrer des lettres et des signes dan sles mauvais champs dans la calculatrice 
+**Définition :** Ces tests consistent à explorer librement l'application sans suivre de script de test précis, en recherchant des anomalies ou des comportements inattendus.
+
+Pour illustrer cette partie, je vous propose de regarder la vidéo suivante : [Lien]
+Vous assistez a une session de test exploratoire organisé avec 4 testeur/testeuse. Ceux-ci ont pour mission de tester la calculatrice et de trouver des bugs. Ils ont 30 minutes pour réaliser cette mission. Il ont un bloc note pour noter les bugs qu'ils trouvent. Lorsqu'un bug est trouvé, il est signalé à l'organisateur de la session.
+
+
+On a donc vu qu'un utilisateur a eu l'idée de rentrer des lettres avec son clavier dans les champs de la calculatrice. Ceci est gérer par l'application mais génère une erreur de syntaxe, ce qui n'est pas très explicite pour l'utilisateur. On pourrait améliorer cela en affichant un message d'erreur plus explicite par exemple.
+
+
+## Conclusion
+
+On a vu que les tests sont très importants dans le développement d'un logiciel. Ils permettent de révéler des erreurs dans le code et de les corriger. Ils permettent également de s'assurer que le logiciel fonctionne correctement pour l'utilisateur final. Il est donc important de prendre le temps de rédiger des tests pour son code à plusieurs niveaux : unitaire, intégration, fonctionnel, performance, exploratoire. Chaque niveau de test permet de révéler des erreurs différentes dans le code.
+
 
 
 # Reste a faire
