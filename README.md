@@ -2,7 +2,7 @@
 
 ## What is this repository for ?
 
-L'objectif de ce repository est de démontrer l'importance des tests dans le développement d'un logiciel. Il a été créé dans le cadre du cours de Veille Technologique dans ma troisième année de BUT Informatique à l'université de La Rochelle. Ce repository contient un mini-projet de calculatrice réalisé en Python, capable d'effectuer des opérations de base (addition, soustraction, multiplication, division), et de les enregistrer dans une base de donnée. Le projet contient plusieurs branches, chacune représentant une couche de tests supplémentaire.
+L'objectif de ce repository est de démontrer l'importance des tests dans le développement d'un logiciel. Il a été créé dans le cadre du cours de Veille Technologique dans ma troisième année de BUT Informatique à l'université de La Rochelle. Ce repository contient un mini-projet de calculatrice réalisé en Python, capable d'effectuer des opérations de base (addition, soustraction, multiplication, division), et de les enregistrer dans une base de donnée locale. Le projet contient plusieurs branches, chacune représentant une couche de tests supplémentaire.
 
 ## How do I get set up ?
 
@@ -17,7 +17,7 @@ Rendez-vous sur la branche `step-0-no-test` pour voir le code de la première ve
 **Définition :** Ces tests se concentrent sur les plus petites unités de vos logiciels, c'est-à-dire vos méthodes et fonctions. Ils s'assurent que la sortie de vos méthode et fonction est celle attendu pour une entrée donnée.
 
 Rendez-vous sur la branche `step-1-unit-test` pour voir le code de la deuxième version du projet. Cette version contient des tests unitaires pour les fonctions de la calculatrice. Ces tests permettent de vérifier que chaque fonction de la calculatrice fonctionne correctement.
-Executez la commande `python3 -m unittest` pour lancer les tests.
+Executez la commande `python3 -m pytest tests/` pour lancer les tests.
 
 - Erreure reveler par les tests unitaires la division par zero n'est pas prise ne compte
 

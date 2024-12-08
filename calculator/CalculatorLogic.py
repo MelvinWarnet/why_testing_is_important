@@ -35,8 +35,8 @@ class CalculatorLogic:
 
     def multiply(self, a, b):
         """Perform multiplication with high memory and CPU usage."""
-        for i in range(100000000):
-            a = a * b
+        # for i in range(100000):
+        #     a * b + i
         return a * b
 
 
