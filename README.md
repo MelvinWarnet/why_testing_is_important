@@ -150,8 +150,23 @@ On voit que les tests passent tous, ils ont permis de révéler des erreurs dans
 Rendez-vous sur la branche `step-3-functional-test` pour voir le code de la quatrième version du projet `git branch step-3-functional-test`. Cette version contient des tests fonctionnels portant sur les fonctionnalités de la calculatrice. Ces tests permettent de vérifier que la calculatrice fonctionne correctement pour l'utilisateur final.
 Executez la commande `python3 -m pytest --cov=calculator --cov-report=html --cov-report=term` pour lancer les tests.
 
-- Erreur reveler : le contenu du label n'est pas un string mais on nombre, la conversion en string doit etre faite avant l'affichage
+On obtient le résultat suivant :
+```
+---------- coverage: platform linux, python 3.10.12-final-0 ----------
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+calculator/CalculatorApp.py       105      2    98%
+calculator/CalculatorLogic.py      41      1    98%
+calculator/DatabaseManager.py      28      0   100%
+---------------------------------------------------
+TOTAL                             174      3    98%
+Coverage HTML written to dir htmlcov
 
+===== short test summary info =====
+FAILED tests/FonctionalTests/test_functional.py::test_calculate_result - AssertionError: assert 3.0 == '3.0'
+===== 1 failed, 34 passed in 3.63s ======
+```
+On voit que un test a échoué. Ce test a permis de révéler une erreur dans le code de la fonction `get_result` de la classe `CalculatorApp`. En effet, en regardant le code source, on voit que le contenu du label n'est pas converti en string avant d'être affiché.
 ```python
 def get_result(self):
     """Calculate the result, display it and save it."""
@@ -183,13 +198,48 @@ def get_result(self):
     self.result_display.config(text=str(result)) #<----
 ```
 
+On peut maintenant relancer les tests pour vérifier que les erreurs ont été corrigées.
+```
+---------- coverage: platform linux, python 3.10.12-final-0 ----------
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+calculator/CalculatorApp.py       105      2    98%
+calculator/CalculatorLogic.py      41      1    98%
+calculator/DatabaseManager.py      28      0   100%
+---------------------------------------------------
+TOTAL                             174      3    98%
+Coverage HTML written to dir htmlcov
+
+
+==== 35 passed in 3.55s ======
+```
+On voit que les tests passent tous, ils ont permis de révéler des erreurs dans le code et de les corriger. On voit également que la couverture des tests est de 98%. C'est un trés bon score, on peut considérer que cette couverture est suffisante pour ce projet, les prochains tests que nous allons ajouter seront plus orienté performance.
+
 
 ## Etape 4 : Ajout d'une couche de tests de performance
 
 **Définition :** Ces tests se concentrent sur les performances de votre logiciel. Ils s'assurent que votre logiciel fonctionne correctement en terme de temps d'exécution, de consommation de ressources, etc.
 
-- Erreur reveler : - La multiplication fait des trucs de zinzin en temre de ressource mais sort le bon resultat
+Rendez-vous sur la branche `step-4-performance-test` pour voir le code de la cinquième version du projet `git branch step-4-performance-test`. Cette version contient des tests de performance portant sur les performances de la calculatrice. Ces tests permettent de vérifier que la calculatrice execute les opérations de base dans un temps cible. _Notez que on fonction de votre ordinateur, les temps cibles peuvent être à adapter._
+Executez la commande `python3 -m pytest --cov=calculator --cov-report=html --cov-report=term` pour lancer les tests.
 
+On obtient le résultat suivant :
+```
+---------- coverage: platform linux, python 3.10.12-final-0 ----------
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+calculator/CalculatorApp.py       105      2    98%
+calculator/CalculatorLogic.py      41      1    98%
+calculator/DatabaseManager.py      28      0   100%
+---------------------------------------------------
+TOTAL                             174      3    98%
+Coverage HTML written to dir htmlcov
+
+===== short test summary info =====
+FAILED tests/PerformanceTests/test_performance.py::test_multiplication_performance_time - AssertionError: Time taken too long: 2.998039484024048 seconds
+===== 1 failed, 38 passed in 10.05s =====
+```
+On voit que un test a échoué. Ce test a permis de révéler une erreur dans le code de la fonction `multiply` de la classe `CalculatorLogic`. En effet, en regardant le code source, on voit que la fonction `multiply` contient une boucle inutile qui ralentit l'exécution
 ```python
 def multiply(self, a, b):
     """Do the multiplication."""
@@ -205,7 +255,27 @@ def multiply(self, a, b):
     return a * b
 ```
 
+On peut maintenant relancer les tests pour vérifier que les erreurs ont été corrigées.
+```
+---------- coverage: platform linux, python 3.10.12-final-0 ----------
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+calculator/CalculatorApp.py       105      2    98%
+calculator/CalculatorLogic.py      39      1    97%
+calculator/DatabaseManager.py      28      0   100%
+---------------------------------------------------
+TOTAL                             172      3    98%
+Coverage HTML written to dir htmlcov
+
+
+==== 39 passed in 7.39s =====
+```
+On voit que les tests passent tous, ils ont permis de révéler des erreurs dans le code et de les corriger.
+
 ## Etape 5 : Ajout d'une couche de tests exploratoires
+
+**Définition :** Ces consistent à explorer librement l'application sans suivre de script de test précis, en recherchant des anomalies ou des comportements inattendus.
+
 
 - Erreur reveler : on peut rentrer des lettres et des signes dan sles mauvais champs dans la calculatrice 
 
