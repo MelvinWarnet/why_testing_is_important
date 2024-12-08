@@ -21,17 +21,97 @@ Executez la commande `python3 -m pytest tests/` pour lancer les tests.
 
 - Erreure reveler par les tests unitaires la division par zero n'est pas prise ne compte
 
+```python
+def divide(self, a, b):
+    """Do the division."""
+    return a / b
+```
+
+On peut modifier la fonction `divide` de la classe `Calculator` pour prendre en compte la division par zéro :
+```python
+def divide(self, a, b):
+    """Do the division."""
+    if b == 0:
+        return "Syntax error"
+    return a / b
+```
+
 ## Etape 2 : Ajout d'une couche de tests d'intégration
 
 **Définition :** Ces tests se concentrent sur les interactions entre les différentes unités de votre logiciel. Ils s'assurent que les différentes unités de votre logiciel fonctionnent correctement ensemble.
 
 - Erreur reveler : les resultat sont converie en entier avant d'etre rentré dans la base de donnée dans l'appelle depuis app
 
+```python
+def get_result(self):
+    """Calculate the result, display it and save it."""
+    first_value = self.first_value_entry.get()
+    operator = self.operator_entry.get()
+    second_value = self.second_value_entry.get()
+    self.calculator_logic.calcul[0] = first_value
+    self.calculator_logic.calcul[1] = operator
+    self.calculator_logic.calcul[2] = second_value
+    result = self.calculator_logic.calculate_result()
+    self.db_manager.save_calculation(first_value, operator, second_value, int(result)) #<----
+    self.show_history()
+    self.result_display.config(text=str(result))
+```
+
+On peut retirer la conversion en entier pour que les résultats soient enregistrés correctement dans la base de données :
+```python
+def get_result(self):
+    """Calculate the result, display it and save it."""
+    first_value = self.first_value_entry.get()
+    operator = self.operator_entry.get()
+    second_value = self.second_value_entry.get()
+    self.calculator_logic.calcul[0] = first_value
+    self.calculator_logic.calcul[1] = operator
+    self.calculator_logic.calcul[2] = second_value
+    result = self.calculator_logic.calculate_result()
+    self.db_manager.save_calculation(first_value, operator, second_value, result) #<----
+    self.show_history()
+    self.result_display.config(text=str(result))
+```
+
+
+
+
 ## Etape 3 : Ajout d'une couche de tests fonctionnels
 
 **Définition :** Ces tests se concentrent sur les fonctionnalités de votre logiciel. Ils s'assurent que votre logiciel fonctionne correctement pour l'utilisateur final. Ils simulent le déroulement d'un scénario métier (souvent définit par les exigences métier ou fonctionnels), sans prêter attention aux états intermédiaire de l'application mais en vérifiant les résultats finaux.
 
 - Erreur reveler : le contenu du label n'est pas un string mais on nombre, la conversion en string doit etre faite avant l'affichage
+
+```python
+def get_result(self):
+    """Calculate the result, display it and save it."""
+    first_value = self.first_value_entry.get()
+    operator = self.operator_entry.get()
+    second_value = self.second_value_entry.get()
+    self.calculator_logic.calcul[0] = first_value
+    self.calculator_logic.calcul[1] = operator
+    self.calculator_logic.calcul[2] = second_value
+    result = self.calculator_logic.calculate_result()
+    self.db_manager.save_calculation(first_value, operator, second_value, result)
+    self.show_history()
+    self.result_display.config(text=result) #<----
+```
+
+On peut convertir le résultat en string avant de l'afficher :
+```python
+def get_result(self):
+    """Calculate the result, display it and save it."""
+    first_value = self.first_value_entry.get()
+    operator = self.operator_entry.get()
+    second_value = self.second_value_entry.get()
+    self.calculator_logic.calcul[0] = first_value
+    self.calculator_logic.calcul[1] = operator
+    self.calculator_logic.calcul[2] = second_value
+    result = self.calculator_logic.calculate_result()
+    self.db_manager.save_calculation(first_value, operator, second_value, result)
+    self.show_history()
+    self.result_display.config(text=str(result)) #<----
+```
 
 
 ## Etape 4 : Ajout d'une couche de tests de performance
@@ -40,10 +120,24 @@ Executez la commande `python3 -m pytest tests/` pour lancer les tests.
 
 - Erreur reveler : - La multiplication fait des trucs de zinzin en temre de ressource mais sort le bon resultat
 
+```python
+def multiply(self, a, b):
+    """Do the multiplication."""
+    for i in range(100000):
+        a * b + i
+    return a * b
+```
+
+On peut retirer la boucle inutile pour améliorer les performances de la fonction `multiply` :
+```python
+def multiply(self, a, b):
+    """Do the multiplication."""
+    return a * b
+```
 
 ## Etape 5 : Ajout d'une couche de tests exploratoires
 
-- Erreur reveler : on peut rentrer des lettres dans la calculatrice
+- Erreur reveler : on peut rentrer des lettres et des signes dan sles mauvais champs dans la calculatrice 
 
 
 # Reste a faire
@@ -51,4 +145,3 @@ Executez la commande `python3 -m pytest tests/` pour lancer les tests.
 - finir l'ecriture de ce doc
 - faire la mini-video de test exploratoire
 - faire un ligne pip3 install avec tout les package necessaire
-- terminer les test de performance reesayer ce que j'avais deja essayer psulis et memory_profiler

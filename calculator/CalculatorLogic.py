@@ -34,16 +34,13 @@ class CalculatorLogic:
         return a - b
 
     def multiply(self, a, b):
-        """Perform multiplication with high memory and CPU usage."""
-        # for i in range(100000):
-        #     a * b + i
+        """Do the multiplication."""
+        for i in range(100000):
+            a * b + i
         return a * b
-
 
     def divide(self, a, b):
         """Do the division."""
-        if b == 0:
-            return "Syntax error"
         return a / b
 
     def verify_syntax(self):

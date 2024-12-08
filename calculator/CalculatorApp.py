@@ -38,7 +38,7 @@ class CalculatorApp:
             self.first_value_entry.delete(len(self.first_value_entry.get())-1, tkinter.END)
 
     def get_result(self):
-        """Calculate the result and display it."""
+        """Calculate the result, display it and save it."""
         first_value = self.first_value_entry.get()
         operator = self.operator_entry.get()
         second_value = self.second_value_entry.get()
@@ -46,9 +46,9 @@ class CalculatorApp:
         self.calculator_logic.calcul[1] = operator
         self.calculator_logic.calcul[2] = second_value
         result = self.calculator_logic.calculate_result()
-        self.db_manager.save_calculation(first_value, operator, second_value, result)
+        self.db_manager.save_calculation(first_value, operator, second_value, int(result))
         self.show_history()
-        self.result_display.config(text=str(result))
+        self.result_display.config(text=result)
 
     def show_history(self):
         """Show the calculation history from the database."""

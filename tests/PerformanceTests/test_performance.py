@@ -30,8 +30,6 @@ def test_multiplication_performance_time(app):
         app.second_value_entry.focus_force()
         app.bouton_two.invoke()
         app.bouton_equals.invoke()
-        print(app.first_value_entry.get())
-        print(app.result_display.cget("text"))
         app.bouton_clear.invoke()
     
     end_time = time.time()
@@ -52,8 +50,6 @@ def test_addition_performance_time(app):
         app.second_value_entry.focus_force()
         app.bouton_two.invoke()
         app.bouton_equals.invoke()
-        print(app.first_value_entry.get())
-        print(app.result_display.cget("text"))
         app.bouton_clear.invoke()
     
     end_time = time.time()
@@ -74,8 +70,6 @@ def test_subtraction_performance_time(app):
         app.second_value_entry.focus_force()
         app.bouton_two.invoke()
         app.bouton_equals.invoke()
-        print(app.first_value_entry.get())
-        print(app.result_display.cget("text"))
         app.bouton_clear.invoke()
     
     end_time = time.time()
@@ -96,8 +90,6 @@ def test_division_performance_time(app):
         app.second_value_entry.focus_force()
         app.bouton_two.invoke()
         app.bouton_equals.invoke()
-        print(app.first_value_entry.get())
-        print(app.result_display.cget("text"))
         app.bouton_clear.invoke()
     
     end_time = time.time()
