@@ -6,7 +6,7 @@ L'objectif de ce repository est de démontrer l'importance des tests dans le dé
 
 ## How do I get set up ?
 
-Ce mini-projet est réalisé en Python 3.10.12 mais il est possible de l'exécuter avec une version antérieure de Python 3. Pour lancer le projet, il suffit de cloner le repository et d'exécuter le fichier `main.py` avec la commande `python3 main.py`. Pour une expérience améliorée, vous pouver ajouer la police de caractère `Digital-7.ttf` à votre système. Vous devrez également avoir installer `sqlite3` pour pouvoir utiliser la base de données et `pytest` pour lancer les tests.
+Ce mini-projet est réalisé en Python 3.10.12 mais il est possible de l'exécuter avec une version antérieure de Python 3. Pour lancer le projet, il suffit de cloner le repository et d'exécuter le fichier `main.py` avec la commande `python3 main.py`. Pour une expérience améliorée, vous pouver ajouter la police de caractère `Digital-7.ttf` à votre système. Vous devrez également avoir installer `sqlite3` pour pouvoir utiliser la base de données et `pytest` pour lancer les tests.
 
 ## Etape 0 : Une première version
 
@@ -17,10 +17,26 @@ Rendez-vous sur la branche `step-0-no-test` pour voir le code de la première ve
 **Définition :** Ces tests se concentrent sur les plus petites unités de vos logiciels, c'est-à-dire vos méthodes et fonctions. Ils s'assurent que la sortie de vos méthode et fonction est celle attendu pour une entrée donnée.
 
 Rendez-vous sur la branche `step-1-unit-test` pour voir le code de la deuxième version du projet. Cette version contient des tests unitaires pour les fonctions de la calculatrice. Ces tests permettent de vérifier que chaque fonction de la calculatrice fonctionne correctement.
-Executez la commande `python3 -m pytest tests/` pour lancer les tests.
+Executez la commande `python3 -m pytest --cov=calculator --cov-report=html --cov-report=term` pour lancer les tests.
 
-- Erreure reveler par les tests unitaires la division par zero n'est pas prise ne compte
+On obtient le résultat suivant :
+```
+---------- coverage: platform linux, python 3.10.12-final-0 ----------
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+calculator/CalculatorApp.py       105    105     0%
+calculator/CalculatorLogic.py      39      1    97%
+calculator/DatabaseManager.py      28      0   100%
+---------------------------------------------------
+TOTAL                             172    106    38%
+Coverage HTML written to dir htmlcov
 
+======short test summary info ======
+FAILED tests/UnitTests/test_CalculatorLogic.py::test_division_by_zero - ZeroDivisionError: division by zero
+FAILED tests/UnitTests/test_CalculatorLogic.py::test_calcul_division_by_zero - ZeroDivisionError: float division by zero
+======2 failed, 22 passed in 0.39s =====
+```
+On voit que deux tests ont échoué. Ces tests ont permis de révéler des erreurs dans le code de la fonction `divide` de la classe `Calculator`. En effet, en regardant le code source, on voit que la division par zéro n'est pas prise en compte.
 ```python
 def divide(self, a, b):
     """Do the division."""
@@ -36,12 +52,48 @@ def divide(self, a, b):
     return a / b
 ```
 
+On peut maintenant relancer les tests pour vérifier que les erreurs ont été corrigées.
+```
+---------- coverage: platform linux, python 3.10.12-final-0 ----------
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+calculator/CalculatorApp.py       105    105     0%
+calculator/CalculatorLogic.py      41      1    98%
+calculator/DatabaseManager.py      28      0   100%
+---------------------------------------------------
+TOTAL                             174    106    39%
+Coverage HTML written to dir htmlcov
+
+
+==== 24 passed in 0.24s ====
+```
+
+On voit que les tests passent tous, ils ont permis de révéler des erreurs dans le code et de les corriger. On voit également que la couverture des tests est de n'est que de 39%. Il reste donc des parties du code qui ne sont pas testées. Il faudra ajouter des tests pour ces parties du code.
+
 ## Etape 2 : Ajout d'une couche de tests d'intégration
 
 **Définition :** Ces tests se concentrent sur les interactions entre les différentes unités de votre logiciel. Ils s'assurent que les différentes unités de votre logiciel fonctionnent correctement ensemble.
 
-- Erreur reveler : les resultat sont converie en entier avant d'etre rentré dans la base de donnée dans l'appelle depuis app
+Rendez-vous sur la branche `step-2-integration-test` pour voir le code de la troisième version du projet. Cette version contient des tests d'intégration portant sur les interactions entre les différentes classes de la calculatrice. Ces tests permettent de vérifier que les différentes classes de la calculatrice fonctionnent correctement ensemble.
+Executez la commande `python3 -m pytest --cov=calculator --cov-report=html --cov-report=term` pour lancer les tests.
 
+On obtient le résultat suivant :
+```
+---------- coverage: platform linux, python 3.10.12-final-0 ----------
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+calculator/CalculatorApp.py       105      7    93%
+calculator/CalculatorLogic.py      41      1    98%
+calculator/DatabaseManager.py      28      0   100%
+---------------------------------------------------
+TOTAL                             174      8    95%
+Coverage HTML written to dir htmlcov
+
+====short test summary info ====
+FAILED tests/IntegrationTests/test_integration.py::test_calculation_integration - AssertionError: The result should be '9.2' in the database.
+==== 1 failed, 27 passed in 0.91s ====
+```
+On voit que un test a échoué. Ce test a permis de révéler une erreur dans le code de la fonction `get_result` de la classe `CalculatorApp`. En effet, en regardant le code source, on voit que les résultats sont convertis en entier avant d'être enregistrés dans la base de données.
 ```python
 def get_result(self):
     """Calculate the result, display it and save it."""
@@ -73,7 +125,22 @@ def get_result(self):
     self.result_display.config(text=str(result))
 ```
 
+On peut maintenant relancer les tests pour vérifier que les erreurs ont été corrigées.
+```
+---------- coverage: platform linux, python 3.10.12-final-0 ----------
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+calculator/CalculatorApp.py       105      7    93%
+calculator/CalculatorLogic.py      41      1    98%
+calculator/DatabaseManager.py      28      0   100%
+---------------------------------------------------
+TOTAL                             174      8    95%
+Coverage HTML written to dir htmlcov
 
+
+===== 28 passed in 0.86s ======
+```
+On voit que les tests passent tous, ils ont permis de révéler des erreurs dans le code et de les corriger. On voit également que la couverture des tests est de 95%. C'est mieux mais il reste encore des parties du code qui ne sont pas testées. Il faudra ajouter des tests pour ces parties du code.
 
 
 ## Etape 3 : Ajout d'une couche de tests fonctionnels

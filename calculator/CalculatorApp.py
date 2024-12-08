@@ -46,7 +46,7 @@ class CalculatorApp:
         self.calculator_logic.calcul[1] = operator
         self.calculator_logic.calcul[2] = second_value
         result = self.calculator_logic.calculate_result()
-        self.db_manager.save_calculation(first_value, operator, second_value, int(result))
+        self.db_manager.save_calculation(first_value, operator, second_value, result)
         self.show_history()
         self.result_display.config(text=result)
 
