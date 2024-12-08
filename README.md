@@ -2,11 +2,11 @@
 
 ## What is this repository for ?
 
-L'objectif de ce repository est de démontrer l'importance des tests dans le développement d'un logiciel. Il a été créé dans le cadre du cours de Veille Technologique dans ma troisième année de BUT Informatique à l'université de La Rochelle. Ce repository contient un mini-projet de calculatrice réalisé en Python, capable d'effectuer des opérations de base (addition, soustraction, multiplication, division), et de les enregistrer dans une base de donnée locale. Le projet contient plusieurs branches, chacune représentant une couche de tests supplémentaire.
+L'objectif de ce repository est de démontrer l'importance des tests dans le développement d'un logiciel. Il a été créé dans le cadre du cours de Veille Technologique dans ma troisième année de BUT Informatique à l'université de La Rochelle adin de servir de démonstration pendant notre présentation. Ce repository contient un mini-projet de calculatrice réalisé en Python, capable d'effectuer des opérations de base (addition, soustraction, multiplication, division), et de les enregistrer dans une base de donnée locale. Le projet contient plusieurs branches, chacune représentant une couche de tests supplémentaire.
 
 ## How do I get set up ?
 
-Ce mini-projet est réalisé en Python 3.10.12 mais il est possible de l'exécuter avec une version antérieure de Python 3. Pour lancer le projet, il suffit de cloner le repository et d'exécuter le fichier `main.py` avec la commande `python3 main.py`. Pour une expérience améliorée, vous pouver ajouter la police de caractère `Digital-7.ttf` à votre système. Vous devrez également avoir installer `sqlite3` pour pouvoir utiliser la base de données et `pytest` pour lancer les tests.
+Ce mini-projet est réalisé en Python 3.10.12 mais il est possible de l'exécuter avec une version antérieure de Python 3. Pour lancer le projet, il suffit de cloner le repository et d'exécuter le fichier `main.py` avec la commande `python3 main.py`. Pour une expérience améliorée, vous pouver ajouter la police de caractère `Digital-7.ttf` à votre système. Vous devrez également avoir installer `sqlite3` pour pouvoir utiliser la base de données et `pytest` et `pytest-cov` pour lancer les tests.
 
 ## Etape 0 : Une première version
 
@@ -274,14 +274,16 @@ On voit que les tests passent tous, ils ont permis de révéler des erreurs dans
 
 ## Etape 5 : Ajout d'une couche de tests exploratoires
 
-**Définition :** Ces consistent à explorer librement l'application sans suivre de script de test précis, en recherchant des anomalies ou des comportements inattendus.
+**Définition :** Ces tests consistent à explorer librement l'application sans suivre de script de test précis, en recherchant des anomalies ou des comportements inattendus.
+
+Pour illustrer cette partie, je vous propose de regarder la vidéo suivante : [Session de test exploratoire](ressources/test_exploratoire.mp4)
+
+Vous assistez a une session de test exploratoire organisé avec 4 testeur/testeuse. Ceux-ci ont pour mission de tester la calculatrice et de trouver des bugs. Ils ont 30 minutes pour réaliser cette mission. Il ont un bloc note pour noter les bugs qu'ils trouvent. Lorsqu'un bug est trouvé, il est signalé à l'organisateur de la session.
 
 
-- Erreur reveler : on peut rentrer des lettres et des signes dan sles mauvais champs dans la calculatrice 
+On a donc vu qu'un utilisateur a eu l'idée de rentrer des lettres avec son clavier dans les champs de la calculatrice. Ceci est gérer par l'application mais génère une erreur de syntaxe, ce qui n'est pas très explicite pour l'utilisateur. On pourrait améliorer cela en affichant un message d'erreur plus explicite par exemple.
 
 
-# Reste a faire
-- inclure les notion de test coverage
-- finir l'ecriture de ce doc
-- faire la mini-video de test exploratoire
-- faire un ligne pip3 install avec tout les package necessaire
+## Conclusion
+
+On a vu que les tests sont très importants dans le développement d'un logiciel. Ils permettent de révéler des erreurs dans le code et de les corriger. Ils permettent également de s'assurer que le logiciel fonctionne correctement pour l'utilisateur final. Il est donc important de prendre le temps de rédiger des tests pour son code à plusieurs niveaux : unitaire, intégration, fonctionnel, performance, exploratoire. Chaque niveau de test permet de révéler des erreurs différentes dans le code.
