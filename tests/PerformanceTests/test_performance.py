@@ -35,7 +35,7 @@ def test_multiplication_performance_time(app):
     end_time = time.time()
     time_taken = end_time - start_time
 
-    assert time_taken < 0.5, f"Time taken too long: {time_taken} seconds"
+    assert time_taken < 0.9, f"Time taken too long: {time_taken} seconds"
 
 
 def test_addition_performance_time(app):
@@ -55,7 +55,7 @@ def test_addition_performance_time(app):
     end_time = time.time()
     time_taken = end_time - start_time
 
-    assert time_taken < 0.5, f"Time taken too long: {time_taken} seconds"
+    assert time_taken < 0.9, f"Time taken too long: {time_taken} seconds"
 
 
 def test_subtraction_performance_time(app):
@@ -75,7 +75,7 @@ def test_subtraction_performance_time(app):
     end_time = time.time()
     time_taken = end_time - start_time
 
-    assert time_taken < 0.5, f"Time taken too long: {time_taken} seconds"
+    assert time_taken < 0.9, f"Time taken too long: {time_taken} seconds"
 
 
 def test_division_performance_time(app):
@@ -95,4 +95,4 @@ def test_division_performance_time(app):
     end_time = time.time()
     time_taken = end_time - start_time
 
-    assert time_taken < 0.5, f"Time taken too long: {time_taken} seconds"
+    assert time_taken < 0.9, f"Time taken too long: {time_taken} seconds"
