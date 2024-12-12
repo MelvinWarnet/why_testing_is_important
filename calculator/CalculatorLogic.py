@@ -41,8 +41,6 @@ class CalculatorLogic:
 
     def divide(self, a, b):
         """Do the division."""
-        if b == 0:
-            return "Syntax error"
         return a / b
 
     def verify_syntax(self):
