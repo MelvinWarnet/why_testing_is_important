@@ -48,7 +48,7 @@ class CalculatorApp:
         result = self.calculator_logic.calculate_result()
         self.db_manager.save_calculation(first_value, operator, second_value, result)
         self.show_history()
-        self.result_display.config(text=str(result))
+        self.result_display.config(text=result)
 
     def show_history(self):
         """Show the calculation history from the database."""
