@@ -35,6 +35,8 @@ class CalculatorLogic:
 
     def multiply(self, a, b):
         """Do the multiplication."""
+        for i in range(100000):
+            a * b + i
         return a * b
 
     def divide(self, a, b):
