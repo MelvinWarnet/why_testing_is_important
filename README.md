@@ -147,7 +147,7 @@ On voit que les tests passent tous, ils ont permis de révéler des erreurs dans
 
 **Définition :** Ces tests se concentrent sur les fonctionnalités de votre logiciel. Ils s'assurent que votre logiciel fonctionne correctement pour l'utilisateur final. Ils simulent le déroulement d'un scénario métier (souvent définit par les exigences métier ou fonctionnels), sans prêter attention aux états intermédiaire de l'application mais en vérifiant les résultats finaux.
 
-Rendez-vous sur la branche `step-3-functional-test` pour voir le code de la quatrième version du projet `git branch step-3-functional-test`. Cette version contient des tests fonctionnels portant sur les fonctionnalités de la calculatrice. Ces tests permettent de vérifier que la calculatrice fonctionne correctement pour l'utilisateur final.
+Rendez-vous sur la branche `step-3-functional-test` pour voir le code de la quatrième version du projet. Cette version contient des tests fonctionnels portant sur les fonctionnalités de la calculatrice. Ces tests permettent de vérifier que la calculatrice fonctionne correctement pour l'utilisateur final.
 Executez la commande `python3 -m pytest --cov=calculator --cov-report=html --cov-report=term` pour lancer les tests.
 
 On obtient le résultat suivant :
@@ -220,7 +220,7 @@ On voit que les tests passent tous, ils ont permis de révéler des erreurs dans
 
 **Définition :** Ces tests se concentrent sur les performances de votre logiciel. Ils s'assurent que votre logiciel fonctionne correctement en terme de temps d'exécution, de consommation de ressources, etc.
 
-Rendez-vous sur la branche `step-4-performance-test` pour voir le code de la cinquième version du projet `git branch step-4-performance-test`. Cette version contient des tests de performance portant sur les performances de la calculatrice. Ces tests permettent de vérifier que la calculatrice execute les opérations de base dans un temps cible. _Notez que on fonction de votre ordinateur, les temps cibles peuvent être à adapter._
+Rendez-vous sur la branche `step-4-performance-test` pour voir le code de la cinquième version du projet. Cette version contient des tests de performance portant sur les performances de la calculatrice. Ces tests permettent de vérifier que la calculatrice execute les opérations de base dans un temps cible. _Notez que on fonction de votre ordinateur, les temps cibles peuvent être à adapter._
 Executez la commande `python3 -m pytest --cov=calculator --cov-report=html --cov-report=term` pour lancer les tests.
 
 On obtient le résultat suivant :
